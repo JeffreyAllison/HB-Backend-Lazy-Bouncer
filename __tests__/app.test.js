@@ -33,10 +33,6 @@ describe('lazy-bouncer routes', () => {
     return setup(pool);
   });
 
-  afterAll(() => {
-    pool.end();
-  });
-
   it('creates a new user', async () => {
     const res = await request(app).post('/api/v1/users').send(mockUser);
     const { firstName, lastName, email } = mockUser;
@@ -64,7 +60,7 @@ describe('lazy-bouncer routes', () => {
     const res = await request(app).get('/api/v1/users');
 
     expect(res.body).toEqual({
-      message: 'You must be signed in to continue',
+      message: 'Sign In To Continue',
       status: 401,
     });
   });
@@ -85,4 +81,8 @@ describe('lazy-bouncer routes', () => {
 
     expect(res.body).toEqual([{ ...user }]);
   });
+});
+
+afterAll(() => {
+  pool.end();
 });
